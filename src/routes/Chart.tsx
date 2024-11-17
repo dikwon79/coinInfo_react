@@ -8,7 +8,7 @@ interface ChartProps {
 
 interface IHistrical {
   time_open: string;
-  time_close: string;
+  time_close: number;
   open: number;
   high: number;
   low: number;
@@ -20,6 +20,7 @@ function Chart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistrical[]>({
     queryKey: ["ohlcv", coinId],
     queryFn: () => fetchCoinHistory(coinId),
+    refetchInterval: 10000, // 10초마다 자동으로 데이터 갱신
   });
   return (
     <div>
@@ -57,9 +58,23 @@ function Chart({ coinId }: ChartProps) {
               axisTicks: { show: false },
               labels: { show: false },
               axisBorder: { show: false },
+              categories: data?.map((price) =>
+                new Date(price.time_close * 1000).toISOString()
+              ),
+              type: "datetime",
             },
             grid: {
               show: false,
+            },
+            fill: {
+              type: "gradient",
+              gradient: { gradientToColors: ["#5f27cd"], stops: [0, 100] },
+            },
+            colors: ["#1dd1a1"],
+            tooltip: {
+              y: {
+                formatter: (value) => `$${value.toFixed(3)}`,
+              },
             },
           }}
         />
