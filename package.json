@@ -58,5 +58,5 @@
     "@types/react-helmet": "^6.1.11",
     "@types/react-router-dom": "^5.3.3"
   },
-  "homepage": "https://dikwon79.github.io/reactmaster"
+  "homepage": "https://dikwon79.github.io/reactmaster.git"
 }
