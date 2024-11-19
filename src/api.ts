@@ -16,8 +16,8 @@ export function fetchCoinTickers(coinId: string) {
 }
 
 export function fetchCoinHistory(coinId: string) {
-  const endDate = Math.floor(Date.now() / 1000); // 오늘시간을 ms로 변경
-  const startDate = endDate - 60 * 60 * 24 * 7 * 2; //api변경으로 의미 없음 2주?
+  //const endDate = Math.floor(Date.now() / 1000); // 오늘시간을 ms로 변경
+  //const startDate = endDate - 60 * 60 * 24 * 7 * 2; //api변경으로 의미 없음 2주?
   return fetch(`${nomadapi}/?coinId=${coinId}`).then((response) =>
     response.json()
   );
