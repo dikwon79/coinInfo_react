@@ -26,22 +26,26 @@ function Chart({ coinId }: ChartProps) {
     queryFn: () => fetchCoinHistory(coinId),
     refetchInterval: 10000, // 10초마다 자동으로 데이터 갱신
   });
+  console.log(data);
   return (
     <div>
       {isLoading ? (
-        "Loading chart ....."
+        "Loading chart ..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
-              name: "sales",
-              data: data?.map((price) => price.close) as number[],
+              name: "Price",
+              data: data?.map((price) => ({
+                x: new Date(price.time_close * 1000), // Convert to Date object for x-axis
+                y: [price.open, price.high, price.low, price.close], // [open, high, low, close]
+              })) as any[],
             },
           ]}
           options={{
             theme: {
-              mode: isDark ? "dark" : "light",
+              mode: isDark ? "light" : "dark",
             },
             chart: {
               height: 500,
@@ -51,30 +55,17 @@ function Chart({ coinId }: ChartProps) {
               },
               background: "transparent",
             },
-            stroke: {
-              curve: "smooth",
-              width: 2,
-            },
             yaxis: {
-              show: false,
+              tooltip: {
+                enabled: true,
+              },
             },
             xaxis: {
-              axisTicks: { show: false },
-              labels: { show: false },
-              axisBorder: { show: false },
-              categories: data?.map((price) =>
-                new Date(price.time_close * 1000).toISOString()
-              ),
-              type: "datetime",
+              type: "datetime", // Ensure the x-axis uses datetime type
             },
             grid: {
-              show: false,
+              show: true,
             },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#5f27cd"], stops: [0, 100] },
-            },
-            colors: ["#1dd1a1"],
             tooltip: {
               y: {
                 formatter: (value) => `$${value.toFixed(3)}`,

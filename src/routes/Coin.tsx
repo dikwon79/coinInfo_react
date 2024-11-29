@@ -13,17 +13,32 @@ import Price from "./Price";
 import Chart from "./Chart";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
-
+import { useHistory } from "react-router-dom";
 const Container = styled.div`
   padding: 0px 20px;
   max-width: 480px;
   margin: 0 auto;
+  position: relative;
 `;
 const Header = styled.header`
   height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Button = styled.button`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  position: absolute; /* Container를 기준으로 배치 */
+  top: 10px; /* Container 상단에서 10px 아래 */
+  left: 20px; /* Container 오른쪽에서 10px 왼쪽 */
+  cursor: pointer; /* 클릭 가능한 포인터 표시 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
 `;
 const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
@@ -180,6 +195,12 @@ function Coin() {
   // }, [coinId]);
   const loading = infoLoading || tickersLoading;
 
+  const history = useHistory();
+
+  const handleBackClick = () => {
+    history.push("/");
+  };
+
   return (
     <Container>
       <Helmet>
@@ -189,6 +210,7 @@ function Coin() {
       </Helmet>
       <Header>
         <Title>
+          <Button onClick={handleBackClick}>뒤로가기</Button>
           {state?.name ? state.name : loading ? "Loading ..." : infoData?.name}
         </Title>
       </Header>
@@ -238,7 +260,7 @@ function Coin() {
 
           <Switch>
             <Route path={`/${coinId}/price`}>
-              <Price />
+              <Price coinId={coinId} tickersData={tickersData} />
             </Route>
             <Route path={`/${coinId}/chart`}>
               <Chart coinId={coinId} />
