@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/oinInfo_react/static/js/main.1af0dce8.js",
-    "index.html": "/oinInfo_react/index.html",
-    "main.1af0dce8.js.map": "/oinInfo_react/static/js/main.1af0dce8.js.map"
+    "main.js": "/coinInfo_react/static/js/main.3ca552e3.js",
+    "index.html": "/coinInfo_react/index.html",
+    "main.3ca552e3.js.map": "/coinInfo_react/static/js/main.3ca552e3.js.map"
   },
   "entrypoints": [
-    "static/js/main.1af0dce8.js"
+    "static/js/main.3ca552e3.js"
   ]
 }
